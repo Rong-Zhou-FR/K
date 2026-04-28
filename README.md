@@ -60,8 +60,8 @@ k.viz.show(space)
 
 ## Documentation
 
-Full documentation at [docs.k-physics.dev](https://docs.k-physics.dev)
+Coming soon.
 
 ## License
 
-MIT License
+AGPL 3.0
