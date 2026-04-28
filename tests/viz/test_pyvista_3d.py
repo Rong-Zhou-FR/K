@@ -59,7 +59,9 @@ def test_pyvista_3d_render_with_force() -> None:
         mass=1.0,
         inertia=np.eye(3, dtype=np.float64),
     )
-    state.forces.append((np.array([10, 0, 0], dtype=np.float64), None))
+    wrench = np.zeros(6, dtype=np.float64)
+    wrench[:3] = [10, 0, 0]
+    state.wrenches.append((wrench, state.position.copy()))
     obj = PhysicalObject(shape="box", state=state, id="obj1")
     space = Space(dimensions=3)
     space.add(obj)

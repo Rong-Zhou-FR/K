@@ -22,9 +22,19 @@ class PhysicalObject:
 
     def apply(self, influence: object) -> None:
         if hasattr(influence, "force"):
-            self.state.forces.append((influence.force, influence.point))
+            force = influence.force
+            point = influence.point
+            r = point - self.state.position
+            torque_from_force = np.cross(r, force)
+            wrench = np.zeros(6, dtype=np.float64)
+            wrench[:3] = force
+            wrench[3:] = torque_from_force
+            self.state.wrenches.append((wrench, point))
         elif hasattr(influence, "torque"):
-            self.state.torques.append(influence.torque)
+            torque = influence.torque
+            wrench = np.zeros(6, dtype=np.float64)
+            wrench[3:] = torque
+            self.state.wrenches.append((wrench, self.state.position))
         elif hasattr(influence, "heat_rate"):
             self.state.heat_flows.append((influence.heat_rate, influence.location))
 
