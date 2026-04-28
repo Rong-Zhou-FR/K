@@ -1,4 +1,4 @@
-from k.core.state import State, Vector3T, QuaternionT, InertiaTensorT
+from k.core.state import State, Vector3T, QuaternionT, InertiaTensorT, Wrench6T
 from k.core.plugin import PhysicsPlugin
 from k.core.object import PhysicalObject
 from k.core.space import Space
@@ -9,6 +9,7 @@ __all__ = [
     "Vector3T",
     "QuaternionT",
     "InertiaTensorT",
+    "Wrench6T",
     "PhysicsPlugin",
     "PhysicalObject",
     "Space",

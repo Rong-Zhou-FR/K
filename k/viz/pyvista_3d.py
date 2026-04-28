@@ -81,7 +81,8 @@ class PyVista3D(Renderer):
         import pyvista as pv
 
         pos = obj.state.position
-        for force, point in obj.state.forces:
+        for wrench, point in obj.state.wrenches:
+            force = wrench[:3]
             origin = point if point is not None else pos
             scaled_force = force * 0.1
             arrow = pv.Arrow(

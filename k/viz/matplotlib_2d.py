@@ -65,8 +65,9 @@ class Matplotlib2D(Renderer):
 
     def _render_forces(self, obj: PhysicalObject) -> None:
         pos = obj.state.position
-        for force, point in obj.state.forces:
+        for wrench, point in obj.state.wrenches:
             origin = point if point is not None else pos
+            force = wrench[:3]
             self._ax.arrow(
                 origin[0],
                 origin[1],

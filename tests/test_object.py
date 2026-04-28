@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from k.core.state import State
+from k.core.state import State, Wrench6T
 from k.core.object import PhysicalObject
 
 
@@ -48,8 +48,9 @@ def test_object_apply_force() -> None:
     force = np.array([0.0, 0.0, -9.8])
     point = np.array([0.0, 0.0, 0.0])
     obj.apply(DummyForce(force, point))
-    assert len(obj.state.forces) == 1
-    assert np.all(obj.state.forces[0][0] == force)
+    assert len(obj.state.wrenches) == 1
+    assert np.all(obj.state.wrenches[0][0][:3] == force)
+    assert np.all(obj.state.wrenches[0][1] == point)
 
 
 def test_object_apply_torque() -> None:
@@ -57,8 +58,8 @@ def test_object_apply_torque() -> None:
     obj = PhysicalObject(shape="box", state=state)
     torque = np.array([0.0, 0.0, 1.0])
     obj.apply(DummyTorque(torque))
-    assert len(obj.state.torques) == 1
-    assert np.all(obj.state.torques[0] == torque)
+    assert len(obj.state.wrenches) == 1
+    assert np.all(obj.state.wrenches[0][0][3:] == torque)
 
 
 def test_object_enable_domain() -> None:

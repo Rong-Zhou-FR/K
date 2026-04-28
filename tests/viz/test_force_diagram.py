@@ -50,7 +50,9 @@ def test_force_diagram_draw_2d_with_forces() -> None:
         mass=1.0,
         inertia=np.eye(3, dtype=np.float64),
     )
-    state.forces.append((np.array([10, 5, 0], dtype=np.float64), None))
+    wrench = np.zeros(6, dtype=np.float64)
+    wrench[:3] = [10, 5, 0]
+    state.wrenches.append((wrench, state.position.copy()))
     obj = PhysicalObject(shape="point", state=state, id="obj1")
     fig, ax = plt.subplots()
     fd.draw_on_object_2d(obj, ax)
@@ -70,9 +72,9 @@ def test_force_diagram_draw_2d_with_point() -> None:
         mass=1.0,
         inertia=np.eye(3, dtype=np.float64),
     )
-    state.forces.append(
-        (np.array([10, 0, 0], dtype=np.float64), np.array([1, 1, 0], dtype=np.float64))
-    )
+    wrench = np.zeros(6, dtype=np.float64)
+    wrench[:3] = [10, 0, 0]
+    state.wrenches.append((wrench, np.array([1, 1, 0], dtype=np.float64)))
     obj = PhysicalObject(shape="point", state=state, id="obj1")
     fig, ax = plt.subplots()
     fd.draw_on_object_2d(obj, ax)

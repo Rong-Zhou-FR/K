@@ -24,7 +24,8 @@ class ForceDiagram:
         ax: Any,
     ) -> None:
         position = obj.state.position
-        for force, point in obj.state.forces:
+        for wrench, point in obj.state.wrenches:
+            force = wrench[:3]
             origin = point if point is not None else position
             ax.arrow(
                 origin[0],
@@ -48,7 +49,8 @@ class ForceDiagram:
         import pyvista as pv
 
         position = obj.state.position
-        for force, point in obj.state.forces:
+        for wrench, point in obj.state.wrenches:
+            force = wrench[:3]
             origin = point if point is not None else position
             scaled_force = force * self.scale
             arrow = pv.Arrow(
